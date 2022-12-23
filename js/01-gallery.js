@@ -32,6 +32,7 @@ function onClickImg(event) {
     onClickImageShow(item.dataset.source, item.alt);
 }
 function onClickImageShow(imgSrc, imgAlt) {
+
     const modal = basicLightbox.create(
         `<img src="${imgSrc}" alt="${imgAlt}">`,
         {
@@ -39,8 +40,10 @@ function onClickImageShow(imgSrc, imgAlt) {
 },
 {
   closeImg: () => window.removeEventListener('keydown', function (evt) {
-    if (evt.code === 'Escape')
-      return;
+    if (evt.code === 'Escape') {
+      modal.close();
+    }
+      
   }),
   
 }
