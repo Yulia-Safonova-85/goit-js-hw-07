@@ -32,22 +32,18 @@ function onClickImg(event) {
     onClickImageShow(item.dataset.source, item.alt);
 }
 function onClickImageShow(imgSrc, imgAlt) {
-
     const modal = basicLightbox.create(
         `<img src="${imgSrc}" alt="${imgAlt}">`,
         {
-        showImg:() => window.addEventListener('keydown',  callback),
-},
-{
-  closeImg: () => window.removeEventListener('keydown', function (evt) {
+        onShow:() => window.addEventListener('keydown',  closeByESC),
+        onClose: () => window.removeEventListener('keydown', closeByESC),
+      });
+  
+  function closeByESC(evt) {
     if (evt.code === 'Escape') {
       modal.close();
     }
-      
-  }),
-  
-}
-    );
+  }
     modal.show();
     console.log(modal)
 }
