@@ -19,24 +19,32 @@ const markup = galleryItems.map(({ preview, original, description }) =>
 galleryContainer.insertAdjacentHTML('beforeend', markup);
 console.log(markup);
 
-galleryContainer.addEventListener('click', onclick);
 
-function onclick(evt) {
-  evt.preventDefault();
-  const currentImg = evt.target.dataset.source;
-  const image = galleryItems.find(({ original }) => original === currentImg);
+galleryContainer.addEventListener('click', onClickImg);
 
-  const instance = basicLightbox.create(`
- <div class="modal">
-  <img src="${image}" width="800" height="600">
-</div> `, {
-    onShow: (instance) => {
-        instance.element().querySelector('a').onclick = instance.close
-    }
-})
+function onClickImg(event) {
+  event.preventDefault();
+  
+    if (event.target.nodeName !== 'IMG') return;
+  console.log(event.target)
+  
+    const item = event.target;
+    onClickImageShow(item.dataset.source, item.alt);
 }
-instance.show()
-
-
-
-
+function onClickImageShow(imgSrc, imgAlt) {
+    const modal = basicLightbox.create(
+        `<img src="${imgSrc}" alt="${imgAlt}">`,
+        {
+        showImg:() => window.addEventListener('keydown',  callback),
+},
+{
+  closeImg: () => window.removeEventListener('keydown', function (evt) {
+    if (evt.code === 'Escape')
+      return;
+  }),
+  
+}
+    );
+    modal.show();
+    console.log(modal)
+}
