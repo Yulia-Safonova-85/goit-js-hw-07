@@ -23,10 +23,12 @@ galleryContainer.addEventListener('click', onclick);
 
 function onclick(evt) {
   evt.preventDefault();
+  const currentImg = evt.target.dataset.source;
+  const image = galleryItems.find(({ original }) => original === currentImg);
 
   const instance = basicLightbox.create(`
  <div class="modal">
-  <img src="${original}" width="800" height="600">
+  <img src="${image}" width="800" height="600">
 </div> `, {
     onShow: (instance) => {
         instance.element().querySelector('a').onclick = instance.close
